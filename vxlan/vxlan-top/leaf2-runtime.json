@@ -1,0 +1,125 @@
+{
+  "target": "bmv2",
+  "p4info": "build/vxlan.p4.p4info.txt",
+  "bmv2_json": "build/vxlan.json",
+  "table_entries": [
+    {
+      "table": "MyIngress.encap.vxlan_set_vni_lpm",
+      "match": {
+        "hdr.ipv4.dstAddr": ["192.168.1.11", 32]
+      },
+      "action_name": "MyIngress.encap.set_vni",
+      "action_params": {
+        "vni" : 11
+      }
+    },
+    {
+      "table": "MyIngress.encap.vxlan_set_vni_lpm",
+      "match": {
+        "hdr.ipv4.dstAddr": ["192.168.2.21", 32]
+      },
+      "action_name": "MyIngress.encap.set_vni",
+      "action_params": {
+        "vni" : 22
+      }
+    },
+    {
+      "table": "MyIngress.encap.vxlan_set_nexthop_lpm",
+      "match": {
+        "hdr.ipv4.dstAddr": ["192.168.1.11", 32]
+      },
+      "action_name": "MyIngress.encap.set_ipv4_nexthop",
+      "action_params": {
+        "nexthop": "10.0.1.1"
+      }
+    },
+    {
+      "table": "MyIngress.encap.vxlan_set_nexthop_lpm",
+      "match": {
+        "hdr.ipv4.dstAddr": ["192.168.2.21", 32]
+      },
+      "action_name": "MyIngress.encap.set_ipv4_nexthop",
+      "action_params": {
+        "nexthop": "10.0.1.1"
+      }
+    },
+    {
+      "table": "MyIngress.encap.vxlan_set_vtep_ip_lpm",
+      "match": {
+        "hdr.ipv4.srcAddr": ["192.168.1.12", 32]
+      },
+      "action_name": "MyIngress.encap.set_vtep_ip",
+      "action_params": {
+        "vtep_ip" : "10.0.2.1"
+      }
+    },
+    {
+      "table": "MyIngress.encap.vxlan_set_vtep_ip_lpm",
+      "match": {
+        "hdr.ipv4.srcAddr": ["192.168.2.22", 32]
+      },
+      "action_name": "MyIngress.encap.set_vtep_ip",
+      "action_params": {
+        "vtep_ip" : "10.0.2.1"
+      }
+    },
+    {
+      "table": "MyIngress.encap.vxlan_forward_lpm",
+      "match": {
+        "meta.nexthop": ["10.0.1.1", 32]
+      },
+      "action_name": "MyIngress.encap.route",
+      "action_params": {
+        "port" : 4
+      }
+    },
+    {
+      "table": "MyEgress.encap.l2_forward_lpm",
+      "match": {
+        "hdr.ipv4.dstAddr": ["10.0.1.1", 32]
+      },
+      "action_name": "MyEgress.encap.l2_forward",
+      "action_params": {
+         "smac" : "08:00:00:00:02:00" ,
+         "dmac" : "08:00:00:00:04:00"
+      }
+    },
+    {
+      "table": "MyIngress.decap.vxlan_decap_lpm",
+      "match": {
+        "hdr.in_ipv4.dstAddr": ["192.168.1.12",32]
+      },
+      "action_name": "MyIngress.decap.vxlan_decap",
+      "action_params" : { }
+    },
+    {
+      "table": "MyIngress.decap.vxlan_decap_lpm",
+      "match": {
+        "hdr.in_ipv4.dstAddr": ["192.168.2.22",32]
+      },
+      "action_name": "MyIngress.decap.vxlan_decap",
+      "action_params" : { }
+    },
+    {
+      "table": "MyIngress.decap.l2_forward_lpm",
+      "match": {
+        "hdr.in_ipv4.dstAddr": ["192.168.2.22", 32]
+      },
+      "action_name": "MyIngress.decap.l2_forward",
+      "action_params": {
+        "port" : 2
+      }
+    },
+    {
+     "table": "MyIngress.decap.l2_forward_lpm",
+     "match": {
+       "hdr.in_ipv4.dstAddr": ["192.168.1.12", 32]
+     },
+     "action_name": "MyIngress.decap.l2_forward",
+     "action_params": {
+       "port" : 1
+     }
+    }
+
+  ]
+}
