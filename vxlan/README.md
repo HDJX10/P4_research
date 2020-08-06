@@ -1,8 +1,5 @@
-# 1 
-cp -r vxlan ~/tutorials/
+step 1: cp -r vxlan ~/tutorials/
 
-# 2
-cd ~/tutorials/vxlan
+stdp 2: cd ~/tutorials/vxlan
 
-# 3 
-make run
+step 3: make run
